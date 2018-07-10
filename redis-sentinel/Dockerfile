@@ -1,7 +1,7 @@
 FROM redis:3.2.12-alpine
 LABEL maintainer="Oleg Dianov <odidoit@gmail.com>"
 
-RUN apk add --no-cache tini bash
+RUN apk add --no-cache bash
 
 ENV REDIS_SENTINEL_CONF_PATH=/etc/redis/sentinel.conf \
   REDIS_SENTINEL_PORT=26379 \
@@ -13,8 +13,8 @@ ENV REDIS_SENTINEL_CONF_PATH=/etc/redis/sentinel.conf \
   REDIS_MASTER_PORT=6379
 
 COPY sentinel.conf ${REDIS_SENTINEL_CONF_PATH}
-COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-entrypoint.sh /usr/local/bin/
+
+ENTRYPOINT ["docker-entrypoint.sh"]
 
 EXPOSE 26379
-
-ENTRYPOINT ["/sbin/tini", "--", "/docker-entrypoint.sh"]
