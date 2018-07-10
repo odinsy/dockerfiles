@@ -17,4 +17,7 @@ for param in "${REDIS_PARAMS[@]}"; do
   sed -i "s|\$$param|$param_value|g" "$REDIS_SENTINEL_CONF_PATH"
 done
 
-exec redis-server "$REDIS_SENTINEL_CONF_PATH" --sentinel "$@"
+chown -R redis /etc/redis
+exec su-exec redis redis-server "$REDIS_SENTINEL_CONF_PATH" --sentinel "$@"
+
+exec "$@"
