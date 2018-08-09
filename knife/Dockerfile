@@ -1,4 +1,5 @@
 FROM ruby:2.5.1-slim
+LABEL maintainer="Oleg Dianov <odidoit@gmail.com>"
 
 RUN mkdir -p /opt/knife
 
